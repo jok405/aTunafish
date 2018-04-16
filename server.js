@@ -1,59 +1,62 @@
-// Scraping NY Times App | University of Richmond | John Kim
+// DIY Network Scrape App | University of Richmond | John Kim & Jared Barnum
+
+// Require Node Modules
+var express = require('express');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var logger = require('morgan'); // for debugging
 
 
-// Node Dependencies
-const express = require("express");
-const bodyParser = require("body-parser");
-const request = require("request");
-const mongoose = require("mongoose");
 
-const Note = require("./models/Note.js");
-const Article = require("./models/Article.js");
-const Save = require("./models/Save.js");
-
-const logger = require("morgan");
-
-
-const cheerio = require("cheerio");
-const path = require("path");
-const app = express();
-
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
+// Initialize Express for debugging & body parsing
+var app = express();
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: false
 }));
-app.use(express.static("./public"));
 
 
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
-  useMongoClient: true
+// Serve Static Content
+app.use(express.static(process.cwd() + '/public'));
+
+
+
+// Database Configuration with Mongoose
+// ---------------------------------------------------------------------------------------------------------------
+// Connect to localhost if not a production environment
+if(process.env.NODE_ENV == 'production'){
+  // Gotten using `heroku config | grep MONGODB_URI` command in Command Line
+  mongoose.connect('mongodb://heroku_kbdv0v69:860jh71jd1iu5m5639gjr0gg9l@ds129028.mlab.com:29028/heroku_kbdv0v69');
+}
+else{
+  mongoose.connect('mongodb://localhost/nytreact');
+}
+var db = mongoose.connection;
+
+// Show any Mongoose errors
+db.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
 });
 
-const db = mongoose.connection;
-db.on('error', err => {
-    console.log('Mongoose Error', err);
-});
-db.once('open', () => {
-    console.log("Mongoose connection is successful");
+// Once logged in to the db through mongoose, log a success message
+db.once('open', function() {
+  console.log('Mongoose connection successful.');
 });
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "views/index.html"));
-});
-
-require("./routes/scrape.js")(app);
-require("./routes/html.js")(app);
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "views/index.html"));
-});
+// Import the Article model
+var Article = require('./models/Article.js');
+// ---------------------------------------------------------------------------------------------------------------
 
 
-app.listen(PORT, () => {
-    console.log(`App listening on PORT ${PORT}`);
+
+// Import Routes/Controller
+var router = require('./controllers/controller.js');
+app.use('/', router);
+
+
+
+// Launch App
+var port = process.env.PORT || 3000;
+app.listen(port, function(){
+  console.log('Running on port: ' + port);
 });

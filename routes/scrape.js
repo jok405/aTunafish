@@ -16,12 +16,12 @@ module.exports = function (app) {
 
             $(".m-MediaBlock__m-MediaWrap").each(function (i, element) {
                 var result = {};
-                console.log("diy");
+    
 
                 //result.summary = $(element).children("p.summary").text();
                 // console.log("diy");
                 // result.byline = $(element).children("p.byline").text();
-                // result.title = $(element).children("img").text();
+                result.title = $(element).children(".m-MediaBlock__a-HeadlineText").text();
                 result.link = $(element).children("a").attr("href"); // h2 => img => div
                 result.imageSrc = $(element).children("a").children("img").attr("src");
                 console.log(result);
