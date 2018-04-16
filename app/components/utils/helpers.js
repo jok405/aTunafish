@@ -5,7 +5,7 @@ var axios = require('axios');
 
 
 
-// NY Times API Request Function
+// Change NY Times API Request Function to DIY Network API request
 var articleQuery = function(topic, beginYear, endYear){
 
   var authKey = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
