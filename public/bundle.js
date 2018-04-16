@@ -22091,7 +22091,7 @@
 	        React.createElement(
 	          "h1",
 	          { className: "text-center" },
-	          React.createElement("img", { style: { width: "70%" }, src: "img/nyt-header.svg", alt: "The New York Times" })
+	          React.createElement("img", { style: { width: "70%" }, src: "img/DIY-Dad.jpg", alt: "The New York Times" })
 	        ),
 	        React.createElement(
 	          "h2",
@@ -22102,14 +22102,14 @@
 	            React.createElement(
 	              "i",
 	              null,
-	              "A React Rendition"
+	              "Bookmark DIY Projects"
 	            )
 	          )
 	        ),
 	        React.createElement(
 	          "h4",
 	          { className: "text-center" },
-	          "Search for and annotate articles of interest. Click on headlines to learn more."
+	          "Search for DIY articles. Select headlines for Details."
 	        )
 	      ),
 	      React.createElement(Query, { _setSearchFeilds: this._setSearchFeilds }),

@@ -71,7 +71,7 @@ var Main = React.createClass({
   render: function() {
     return (
 
-      <div className="container" style={ {backgroundColor: "white", borderStyle: "solid", borderWidth: "1px"} }>
+      <div className="container" style={ {backgroundColor: "beige", borderStyle: "solid", borderWidth: "1px"} }>
 
         <div className="page-header">
           <h1 className="text-center"><img style={ {width: "70%"} } src="img/DIY-Dad.jpg" alt="DIY Network"/></h1>
